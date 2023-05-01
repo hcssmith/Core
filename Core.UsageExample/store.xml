@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UsageExampleDataSet>
+  <Accounts>
+    <Account Id="1" OrderCount="4" AccountName="Bill" />
+    <Account Id="2" OrderCount="6" AccountName="Jack" />
+    <Account Id="3" OrderCount="9" AccountName="John" />
+  </Accounts>
+</UsageExampleDataSet>
