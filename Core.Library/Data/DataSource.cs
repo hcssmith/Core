@@ -95,42 +95,6 @@ namespace Core.Library.Data
                 }
                 return l;
             }
-
-            List<T> GetAllRowsOld<T>(T model) where T : ColumnCollection
-            {   
-                List<T> l = new();
-                XmlReader reader = XmlReader.Create(fileLocation);
-                while (reader.Read())
-                {
-                    if (reader.NodeType == XmlNodeType.Element && reader.Name == model.TableName)
-                    {
-                        while(reader.Read())
-                        {
-                            if(reader.NodeType == XmlNodeType.Element && reader.Name == model.RowLabel)
-                            {
-                                T? newRow = (T?)Activator.CreateInstance(model.GetType());
-                                if (newRow is null) throw new Exception("Could not create new instance of model");
-                                foreach( KeyValuePair<Text, object> col in newRow.Columns)
-                                {
-                                    string? s = reader.GetAttribute(col.Key);
-                                    if (s is null) s = "";
-                                    if (col.Value is IntegerColumn i)
-                                    {
-                                        i.Value = s;
-                                    } else if (col.Value is TextColumn t)
-                                    {
-                                        t.Value = s;
-                                    }
-                                }
-                                l.Add(newRow);
-                            }
-                        }
-
-                    }
-                }
-
-                return l;
-            }
         }
     }
 }

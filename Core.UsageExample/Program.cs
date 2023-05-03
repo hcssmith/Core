@@ -1,4 +1,5 @@
 ﻿using Core.Library.Types;
+using Core.Library.Types.Complex;
 using Core.Library.Engine;
 using Core.Library.Data;
 using Core.UsageExample.Models;
@@ -12,7 +13,17 @@ namespace Core.UsageExample // Note: actual namespace depends on the project nam
             DataSource ds = new DataSource("store.xml");
             ObjectCollection.SharedObjects.AddToStore("DefaultDataSource", ds);
             ExampleProcess ep = new ExampleProcess();
-            ep.Run();     
+            ep.Run();
+            Range<int> r = new Range<int>(6);
+            r.Filter((x)=>{
+                if(x==2 || x==3) return true;
+                return false;
+                });
+            r.Apply((x) => x * 2);
+            foreach(var v in r)
+            {
+                Console.WriteLine(v);
+            }
         }
     }
 
