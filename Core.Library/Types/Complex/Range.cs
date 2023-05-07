@@ -33,6 +33,9 @@ namespace Core.Library.Types.Complex
             }
         }
 
+        public static Range<T> New(T start, T end) => new Range<T>(start, end);
+        public static Range<T> New(T count) => new Range<T>(count);
+
         public void Filter(Func<T, bool> filter_func)
         {
             int position = 0;

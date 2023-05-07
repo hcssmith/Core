@@ -7,7 +7,7 @@ namespace Core.UsageExample.Models
     public class Account : ColumnCollection
     {
         public readonly TextColumn AccountName = new TextColumn();
-        public readonly IntegerColumn Id = new IntegerColumn() { IsPrimaryKey = true };
+        public readonly IntegerColumn Id = new IntegerColumn() { PrimaryKey = true };
         public readonly IntegerColumn OrderCount = new IntegerColumn();
 
         public Account()

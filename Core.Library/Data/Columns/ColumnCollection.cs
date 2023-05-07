@@ -48,5 +48,17 @@ namespace Core.Library.Data.Columns
                 _columns.Add(i.GetColumnName(), col);
             }
         }
+
+        public Text GetPrimaryKeyColumnName()
+        {
+            foreach(KeyValuePair<Text, object> kvp in _columns)
+            {
+                if (kvp.Value is IColumnBase cb)
+                {
+                    if (cb.IsPrimaryKey()) return kvp.Key;
+                }
+            }
+            return "";
+        }
     }
 }

@@ -8,7 +8,11 @@ namespace Core.Library.Engine
     {
         protected DataSource _ds;
         protected Integer Counter;
-        protected ColumnCollection? From;
+        private ColumnCollection? _queryBase;
+        protected ColumnCollection? From { get => _queryBase; set => _queryBase = value; }
+
+        protected List<object> Relations;
+        protected List<object> Where;
         private List<ColumnCollection> rows;
 
         private delegate void OnStartEvent();

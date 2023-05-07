@@ -50,16 +50,20 @@ namespace Core.Library.Data
             {
                 XmlDocument doc = new XmlDocument();
                 doc.Load(fileLocation);
-                XmlNodeList table = doc.GetElementsByTagName(model.TableName);
-
-                foreach(XmlNode node in table)
+                //TODO: Fix xpath based on model primary key
+                XmlNode? node = doc.SelectSingleNode("//" + model.TableName+"/"+model.RowLabel+"[]");
+                if (node is null)
                 {
-                    foreach (XmlNode row in node.ChildNodes)
+                    // create new node.
+                    doc.Save(fileLocation);
+                    return;
+                }
+                if (node.NodeType == XmlNodeType.Element)
+                {
+                    XmlElement e = (XmlElement)node;
+                    foreach(KeyValuePair<Text, object> v in ((ColumnCollection)model).Columns)
                     {
-                        if (row.Name == model.RowLabel)
-                        {
-
-                        }
+                        e.SetAttribute(v.Key, ((IColumnBase)v.Value).GetValue());
                     }
                 }
                 doc.Save(fileLocation);

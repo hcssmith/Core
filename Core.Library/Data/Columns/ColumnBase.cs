@@ -5,7 +5,10 @@ namespace Core.Library.Data.Columns
     public interface IColumnBase
     {
         public void SetColumnName(string name);
-        public string GetColumnName();
+        public Text GetColumnName();
+        public Bool IsPrimaryKey(); 
+        public Bool Altered();
+        public Text GetValue(); 
     }
     public abstract class ColumnBase<TCol, TBase, TPrimative> : IColumnBase
         where TBase : TypeBase<TBase, TPrimative>
@@ -13,18 +16,24 @@ namespace Core.Library.Data.Columns
         where TCol : ColumnBase<TCol, TBase, TPrimative>, new()
     {
         protected TBase _value;
+        protected TBase _previousValue;
         public string? ColumnName;
-        public Bool IsPrimaryKey;
-
+        private Bool _pk;
+        public Bool PrimaryKey { get => _pk; set => _pk = value; } 
         public TBase Value
         {
             get => _value;
             set => _value = value;
         }
 
+        public TBase PreviousValue
+        {
+            get => _previousValue;
+        }
+
         public ColumnBase()
         {
-            IsPrimaryKey = false;
+            _pk = false;
             if (typeof(TCol) == typeof(IntegerColumn))
             {
                 _value = (dynamic) new Integer(default(int));
@@ -34,22 +43,21 @@ namespace Core.Library.Data.Columns
             } else {
                 _value = (dynamic) new Integer(default(int));
             }
+            _previousValue = _value;
         }
 
         public ColumnBase(TBase b)
         {
-            IsPrimaryKey = false;
+            _pk = false;
             _value = b;
+            _previousValue = _value;
+
         }
 
-        void IColumnBase.SetColumnName(string name)
-        {
-            ColumnName = name;
-        }
-
-        string IColumnBase.GetColumnName()
-        {
-            return ColumnName is null ? "" : ColumnName;
-        }
+        void IColumnBase.SetColumnName(string name) => ColumnName = name;
+        Text IColumnBase.GetColumnName() => ColumnName is null ? "" : ColumnName;
+        Bool IColumnBase.IsPrimaryKey() => _pk;
+        Bool IColumnBase.Altered() => _value != _previousValue;
+        Text IColumnBase.GetValue() => (dynamic) _value;
     }
 }

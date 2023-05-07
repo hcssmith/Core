@@ -14,7 +14,7 @@ namespace Core.UsageExample // Note: actual namespace depends on the project nam
             ObjectCollection.SharedObjects.AddToStore("DefaultDataSource", ds);
             ExampleProcess ep = new ExampleProcess();
             ep.Run();
-            Range<int> r = new Range<int>(6);
+            Range<int> r = Range.New(6);
             r.Filter((x)=>{
                 if(x==2 || x==3) return true;
                 return false;
@@ -30,6 +30,7 @@ namespace Core.UsageExample // Note: actual namespace depends on the project nam
     public class ExampleProcess : BusinessProcess
     {
         private readonly Account Account = new Account();
+        private readonly Orders Order = new Orders();
 
         public ExampleProcess() : base() {}
         
@@ -42,6 +43,8 @@ namespace Core.UsageExample // Note: actual namespace depends on the project nam
         public void InitializeDataView()
         {
             From = Account;
+
+            //Relations.Add(Order);
         }
 
         public override void OnStart()
@@ -52,6 +55,7 @@ namespace Core.UsageExample // Note: actual namespace depends on the project nam
         public override void OnLeaveRow()
         {
             Console.WriteLine(Account.AccountName.Value);
+            Account.AccountName.Value = "JAMES";
         }
 
     }
