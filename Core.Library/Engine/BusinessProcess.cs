@@ -63,6 +63,7 @@ namespace Core.Library.Engine
                 foreach (KeyValuePair<Text, object> col in row.Columns)
                 {
                     if (From is null) throw new Exception("No From set");
+                    // Pattern match?
                     if (From.Columns[col.Key] is TextColumn){
                         ((TextColumn)From.Columns[col.Key]).Value = ((TextColumn)col.Value).Value;
                     } else if (From.Columns[col.Key] is IntegerColumn)

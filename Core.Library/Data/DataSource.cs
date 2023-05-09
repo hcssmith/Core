@@ -1,6 +1,5 @@
 
 using Core.Library.Data.Columns;
-using Core.Library.Data;
 using Core.Library.Types;
 using System.Xml;
 
@@ -50,8 +49,13 @@ namespace Core.Library.Data
             {
                 XmlDocument doc = new XmlDocument();
                 doc.Load(fileLocation);
-                //TODO: Fix xpath based on model primary key
-                XmlNode? node = doc.SelectSingleNode("//" + model.TableName+"/"+model.RowLabel+"[]");
+                Text pkeylbl = model.GetPrimaryKeyColumnName();
+                object pkeyval = model.Columns[pkeylbl];
+                Text sel = "";
+                if (pkeyval is IntegerColumn i) sel = i.Value;
+                if (pkeyval is TextColumn t) sel = t.Value;
+                XmlNode? node = doc.SelectSingleNode("//" + model.TableName+"/"+model.RowLabel+"[@" + pkeylbl 
+                + "='" + sel + "']");
                 if (node is null)
                 {
                     // create new node.

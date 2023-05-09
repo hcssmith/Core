@@ -1,8 +1,9 @@
 namespace Core.Library.Types {
     public class Letter : TypeBase<Letter, char>
     {
-        public Letter(char value) :base(value) {
-        }
+        public Letter(char value) :base(value) {}
+        public Letter() :base() {}
+        static Letter() { DefaultValue = '\0';}
         public static implicit operator Letter(char value) => new Letter(value);
         public static implicit operator Letter(string value) =>textToLetter(value);
         public static implicit operator Letter(Text value) =>textToLetter(value);

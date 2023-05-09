@@ -13,6 +13,9 @@ namespace Core.Library.Types {
         {
             _value = value;
         }
+        public TypeBase() {}
+
+        public static TPrimative DefaultValue;
 
         public void SetIncrAmount(TPrimative incrementAmmount) => incrAmount = incrementAmmount;
         public abstract TOuter _Incr();

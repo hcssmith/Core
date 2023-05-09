@@ -54,6 +54,13 @@ namespace Core.Library.Data.Columns
 
         }
 
+        public static bool operator <(ColumnBase<TCol, TBase, TPrimative>  lhs, ColumnBase<TCol, TBase, TPrimative>  rhs) => Comparer<TPrimative>.Default.Compare(lhs.Value.Value, rhs.Value.Value) < 0;
+        public static bool operator >(ColumnBase<TCol, TBase, TPrimative>  lhs, ColumnBase<TCol, TBase, TPrimative>  rhs) => !(lhs<rhs);
+        public static bool operator >=(ColumnBase<TCol, TBase, TPrimative>  lhs, ColumnBase<TCol, TBase, TPrimative>  rhs) => (lhs>rhs) || (lhs==rhs);
+        public static bool operator <=(ColumnBase<TCol, TBase, TPrimative>  lhs, ColumnBase<TCol, TBase, TPrimative>  rhs) => (lhs<rhs) || (lhs==rhs);
+        public static bool operator ==(ColumnBase<TCol, TBase, TPrimative>  lhs, ColumnBase<TCol, TBase, TPrimative>  rhs) => lhs.Value.Equals(rhs.Value);
+        public static bool operator !=(ColumnBase<TCol, TBase, TPrimative>  lhs, ColumnBase<TCol, TBase, TPrimative>  rhs) => !(lhs.Value==rhs.Value);
+
         void IColumnBase.SetColumnName(string name) => ColumnName = name;
         Text IColumnBase.GetColumnName() => ColumnName is null ? "" : ColumnName;
         Bool IColumnBase.IsPrimaryKey() => _pk;

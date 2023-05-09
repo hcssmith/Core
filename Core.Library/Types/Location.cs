@@ -1,6 +1,8 @@
 namespace Core.Library.Types {
     public class Location : Text {
         public Location(Text t) :base(t) {}
+        public Location() :base() {}
+        static Location() {DefaultValue = "./";}
 
         public static implicit operator Location(string value) => new Location(value);
         public Bool Exists()

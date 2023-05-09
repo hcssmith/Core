@@ -4,6 +4,9 @@ namespace Core.Library.Types {
         public Fraction(double value) :base(value) {
             SetIncrAmount(1.0);
         }
+        public Fraction() : base() {}
+
+        static Fraction() {DefaultValue = 0.0;}
         public static implicit operator Fraction(double value) => new Fraction(value);
 
         public static implicit operator Fraction(Text value) => textToFraction(value);

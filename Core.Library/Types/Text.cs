@@ -1,8 +1,9 @@
 namespace Core.Library.Types {
     public class Text : TypeBase<Text, string>
     {
-        public Text(string value) :base(value) {
-        }
+        public Text(string value) :base(value) {}
+        public Text() :base() {}
+        static Text(){DefaultValue = "";}
         public static implicit operator Text(string value) => new Text(value);
         public static implicit operator Text(char value) => new Text(value.ToString());
         public static implicit operator Text(Letter value) => new Text(value.Value.ToString());

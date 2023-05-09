@@ -14,7 +14,7 @@ namespace Core.UsageExample // Note: actual namespace depends on the project nam
             ObjectCollection.SharedObjects.AddToStore("DefaultDataSource", ds);
             ExampleProcess ep = new ExampleProcess();
             ep.Run();
-            Range<int> r = Range.New(6);
+            Range<int> r = Range<int>.New(6);
             r.Filter((x)=>{
                 if(x==2 || x==3) return true;
                 return false;
@@ -24,6 +24,8 @@ namespace Core.UsageExample // Note: actual namespace depends on the project nam
             {
                 Console.WriteLine(v);
             }
+            Integer i = DefaultTypeBuilder.CreateDefault<Integer>();
+            Console.WriteLine(i);
         }
     }
 
@@ -55,7 +57,22 @@ namespace Core.UsageExample // Note: actual namespace depends on the project nam
         public override void OnLeaveRow()
         {
             Console.WriteLine(Account.AccountName.Value);
-            Account.AccountName.Value = "JAMES";
+            Result<Text, Bool> t = TestFunc();
+            if(t.Successfull)
+            {
+              Console.WriteLine(t.Value);
+            }
+            if (Account.Id.Value == 3)
+            {
+                Account.AccountName.Value = "James";
+            } 
+            
+        }
+
+        private Result<Text, Bool> TestFunc()
+        {
+          Result<Text, Bool> res = new("Some Value");
+          return res;
         }
 
     }
